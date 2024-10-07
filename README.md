@@ -280,7 +280,7 @@ Este proyecto contiene 10 consultas SQL que interactúan con la base de datos de
 
 Descripción: 
 
-```
+``` sql
 DELIMITER //
 CREATE PROCEDURE videojuegos_por_plataforma(IN nombrePlataforma VARCHAR(100))
 BEGIN
@@ -300,7 +300,7 @@ CALL videojuegos_por_plataforma("PlayStation");
 
 Descripción: 
 
-```
+``` sql
 DELIMITER //
 CREATE PROCEDURE productos_por_categoria(IN nombreCategoria VARCHAR(100), IN valor INT)
 BEGIN
@@ -319,7 +319,7 @@ CALL productos_por_categoria("Videojuegos", 100);
 
 Descripción: 
 
-```
+``` sql
 DELIMITER //
 CREATE PROCEDURE ventas_cliente_por_fechas(IN nombreBuscar VARCHAR(100), IN fechaInicial DATE, IN fechaFinal DATE)
 BEGIN
@@ -339,7 +339,7 @@ CALL ventas_cliente_por_fechas("Carlos Pérez", "2024-10-01", "2024-10-07");
 ### 4. Calcular el total de ventas de un empleado en un mes dado.
 
 Descripción: 
-```
+``` sql
 DELIMITER //
 CREATE FUNCTION ventas_empleado_mes(nombreBuscar VARCHAR(100), mes VARCHAR(2))
 RETURNS INT
