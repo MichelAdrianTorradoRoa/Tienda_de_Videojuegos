@@ -11,7 +11,6 @@ Este proyecto de base de datos está diseñado para gestionar la información de
     2. [Tablas Intermedias](#tablas-intermedias)
 2. [Estructura del Proyecto](#estructura-del-proyecto)
     1. [Ingenieria Inversa](#ingenieria-inversa)
-    2. [Relaciones](#relaciones)
 3. [Consultas](#consultas)
 4. [Tecnologias](#tecnologías-🤖)
 5. [Instalación](#instalación-📦)
@@ -237,38 +236,55 @@ Las entidades principales son las siguientes:
      - `idProveedor`: Relación con el proveedor.
      - `fecha`: Fecha en la que se realizó la orden.
 
-
-### 14. **Dirección**
-   - **Descripción**: Almacena las direcciones de clientes, empleados y proveedores.
-
-| PK | FK | Campo            | Tipo         |
-|----|----|------------------|--------------|
-| PK |    | idTipoAccesorio  | INTEGER      |
-|    |    | nombre           | VARCHAR(255) |
-
-   - **Atributos**:
-     - `idDireccion`: Identificador único de la dirección.
-     - `idCiudad`: Relación con la ciudad.
-     - `nombre`: Dirección completa (calle, número, etc.).
-
-### 15. **Ciudad**
-   - **Descripción**: Almacena las ciudades de las direcciones.
-   - **Atributos**:
-     - `idCiudad`: Identificador único de la ciudad.
-     - `nombre`: Nombre de la ciudad.
-     - `idPais`: Relación con el país.
-
-### 16. **País**
-   - **Descripción**: Almacena los países correspondientes a las ciudades.
-   - **Atributos**:
-     - `idPais`: Identificador único del país.
-     - `nombre`: Nombre del país.
-
-
 ## Tablas Intermedias
 
+### 1. PlataformaxVideojuego
+
+| Campo                      | Tipo                 | Descripción                                   |
+|----------------------------|----------------------|-----------------------------------------------|
+| idPlataformaxVideojuego    | INT (PK)            | Identificador único para la relación.         |
+| idVideojuego               | INT (FK)            | Identificador del videojuego (relacionado con `Videojuego`). |
+| idPlataforma               | INT (FK)            | Identificador de la plataforma (relacionado con `Plataforma`). |
+
+### 2. GeneroxVideojuego
+
+| Campo                      | Tipo                 | Descripción                                   |
+|----------------------------|----------------------|-----------------------------------------------|
+| idGeneroxVideojuego        | INT (PK)            | Identificador único para la relación.         |
+| idVideojuego               | INT (FK)            | Identificador del videojuego (relacionado con `Videojuego`). |
+| idGenero                   | INT (FK)            | Identificador del género (relacionado con `Genero`). |
+
+### 3. Compatibilidad
+
+| Campo                      | Tipo                 | Descripción                                   |
+|----------------------------|----------------------|-----------------------------------------------|
+| idCompatibilidad            | INT (PK)            | Identificador único para la relación.         |
+| idAccesorio                | INT (FK)            | Identificador del accesorio (relacionado con `Accesorio`). |
+| idConsola                  | INT (FK)            | Identificador de la consola (relacionado con `Consola`). |
+
+### 4. ProductoxVenta
+
+| Campo                      | Tipo                 | Descripción                                   |
+|----------------------------|----------------------|-----------------------------------------------|
+| idProductoxVenta           | INT (PK)            | Identificador único para la relación.         |
+| idProducto                 | INT (FK)            | Identificador del producto (relacionado con `Producto`). |
+| idVenta                    | INT (FK)            | Identificador de la venta (relacionado con `Venta`). |
+
+### 5. ProductoxOrden
+
+| Campo                      | Tipo                 | Descripción                                   |
+|----------------------------|----------------------|-----------------------------------------------|
+| idProductoxOrden           | INT (PK)            | Identificador único para la relación.         |
+| idProducto                 | INT (FK)            | Identificador del producto (relacionado con `Producto`). |
+| idOrden                    | INT (FK)            | Identificador de la orden (relacionado con `Orden`). |
 
 ## Estructura del Proyecto
+
+### Ingenieria Inversa
+
+La estructura del proyecto fue diseñada utilizando la ingeniería inversa en MySQL Workbench, lo que permitió obtener un esquema visual y detallado de las tablas y sus relaciones. A continuación, se presenta una descripción de las tablas principales y sus interconexiones.
+
+![Ingenieria Inversa](<Ingenieria.png>)
 
 ## Consultas
 
