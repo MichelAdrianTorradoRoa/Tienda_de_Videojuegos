@@ -366,7 +366,16 @@ SELECT ventas_empleado_mes("Carlos Pérez", "06") AS "Numero de ventas";
 Descripción: 
 
 ```sql
+DELIMITER //
+CREATE PROCEDURE stock_producto_nombre(IN nombreProducto VARCHAR(100))
+BEGIN
+    SELECT P.nombre, P.stock
+    FROM Producto P
+    WHERE P.nombre = nombreProducto;
+END //
+DELIMITER ;
 
+CALL stock_producto_nombre("The Last of Us Part II");
 ```
 
 ### 6. Consultar el stock disponible de un producto por su nombre.
