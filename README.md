@@ -296,14 +296,38 @@ Este proyecto contiene 10 consultas SQL que interactúan con la base de datos de
 
 Descripción: 
 
-```sql
+``` sql
+DELIMITER //
+CREATE PROCEDURE videojuegos_por_plataforma(IN nombrePlataforma VARCHAR(100))
+BEGIN
+	SELECT PR.nombre
+    FROM Producto PR
+    JOIN Videojuego V ON PR.idProducto=V.idProducto
+    JOIN PlataformaxVideojuego PV ON V.idVideojuego=PV.idVideojuego
+    JOIN Plataforma P ON P.idPlataforma=PV.idPlataforma
+    WHERE P.nombre=nombrePlataforma;
+END //
+DELIMITER ;
+
+CALL videojuegos_por_plataforma("PlayStation");
 
 ```
 ### 2. Obtener todos los productos en una categoría (videojuegos, consolas o accesorios) cuyo stock sea inferior a un valor dado.
 
 Descripción: 
 
-```sql
+``` sql
+DELIMITER //
+CREATE PROCEDURE productos_por_categoria(IN nombreCategoria VARCHAR(100), IN valor INT)
+BEGIN
+	SELECT P.nombre
+    FROM Producto P
+    JOIN Categoria C ON C.idCategoria=P.idCategoria
+    WHERE C.nombre=nombreCategoria AND P.stock<valor;
+END //
+DELIMITER ;
+
+CALL productos_por_categoria("Videojuegos", 100);
 
 ```
 
@@ -311,14 +335,45 @@ Descripción:
 
 Descripción: 
 
-```sql
+``` sql
+DELIMITER //
+CREATE PROCEDURE ventas_cliente_por_fechas(IN nombreBuscar VARCHAR(100), IN fechaInicial DATE, IN fechaFinal DATE)
+BEGIN
+	SELECT V.idVenta, V.idVenta, P.nombre
+    FROM Cliente C
+    JOIN Venta V ON V.idCliente=C.idCliente
+    JOIN ProductoxVenta PV ON PV.idVenta=V.idVenta
+    JOIN Producto P ON P.idProducto=PV.idProducto
+    WHERE C.nombre=nombreBuscar AND V.fecha BETWEEN fechaInicial AND fechaFinal;
+END //
+DELIMITER ;
+
+CALL ventas_cliente_por_fechas("Carlos Pérez", "2024-10-01", "2024-10-07");
 
 ```
 
 ### 4. Calcular el total de ventas de un empleado en un mes dado.
 
 Descripción: 
-```sql
+``` sql
+DELIMITER //
+CREATE FUNCTION ventas_empleado_mes(nombreBuscar VARCHAR(100), mes VARCHAR(2))
+RETURNS INT
+DETERMINISTIC
+BEGIN
+	DECLARE cantidad INT;
+    DECLARE numeroEmpleado VARCHAR(255);
+    
+    SELECT idEmpleado INTO numeroEmpleado FROM Empleado WHERE nombre=nombreBuscar;
+    
+	SELECT COUNT(V.idEmpleado) INTO cantidad
+    FROM Venta V
+    WHERE V.idEmpleado=numeroEmpleado AND MONTH(V.fecha)=mes;
+    RETURN cantidad;
+END //
+DELIMITER ;
+
+SELECT ventas_empleado_mes("Carlos Pérez", "06") AS "Numero de ventas";
 
 ```
 
@@ -327,7 +382,16 @@ Descripción:
 Descripción: 
 
 ```sql
+DELIMITER //
+CREATE PROCEDURE stock_producto_nombre(IN nombreProducto VARCHAR(100))
+BEGIN
+    SELECT P.nombre, P.stock
+    FROM Producto P
+    WHERE P.nombre = nombreProducto;
+END //
+DELIMITER ;
 
+CALL stock_producto_nombre("The Last of Us Part II");
 ```
 
 ### 6. Consultar el stock disponible de un producto por su nombre.
